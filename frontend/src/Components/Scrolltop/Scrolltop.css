@@ -1,0 +1,55 @@
+.scroll-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 70px;
+    height: 70px;
+    border-radius: 75px;
+    margin-top: 30px;
+    background: #bea59e;
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.scroll-btn:hover {
+    background: #72e0e0;
+}
+@media(max-width:1280px) {
+    .scroll-btn {
+      gap: 10px;
+      width: 60px;
+      height: 60px;
+      margin: 20px;
+      font-size: 18px;
+    }
+}
+  
+@media(max-width:1024px) {
+.scroll-btn {
+      width: 50px;
+      height: 50px;
+      font-size: 16px;
+    }
+}
+  
+@media(max-width:800px) {
+    .scroll-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 13px;
+    }
+  }
+  
+  @media(max-width:500px) {
+    .scroll-btn {
+      width: 45px;
+      height: 45px;
+      font-size: 14px;
+    }
+  }

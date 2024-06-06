@@ -20,7 +20,6 @@ const Hero = () => {
         <div className="hero-latest-btn">
           <Link to="new-collections" smooth={true} duration={1000}>
             <div>Latest collections <img src={arrow_icon} alt="" /> </div>
-            
           </Link>
         </div>
       </div>
