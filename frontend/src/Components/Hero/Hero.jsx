@@ -3,6 +3,7 @@ import './Hero.css'
 import hand_icon from '../Assets/hand_icon.png'
 import arrow_icon from '../Assets/arrow.png'
 import hero_image from '../Assets/hero_image.png'
+import { Link } from 'react-scroll'
 const Hero = () => {
   return (
     <div className='hero'>
@@ -17,8 +18,10 @@ const Hero = () => {
           <p>for everyone</p>
         </div>
         <div className="hero-latest-btn">
-          <div>Latest collections</div>
-          <img src={arrow_icon} alt="" />
+          <Link to="new-collections" smooth={true} duration={1000}>
+            <div>Latest collections</div>
+            <img src={arrow_icon} alt="" />
+          </Link>
         </div>
       </div>
       <div className="hero-right">
