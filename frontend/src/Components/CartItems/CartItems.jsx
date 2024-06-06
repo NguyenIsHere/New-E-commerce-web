@@ -3,6 +3,7 @@ import {useContext} from 'react'
 import './CartItems.css'
 import {ShopContext} from '../../Context/ShopContext'
 import remove_icon from '../Assets/cart_cross_icon.png'
+import {Link} from 'react-router-dom'
 
 const CartItems = () =>
 {
@@ -26,7 +27,9 @@ const CartItems = () =>
           return (
             <div>
             <div className="cartitems-format cartitems-format-main ">
-              <img src={e.image} alt="" className='carticon-product-icon' />
+            <Link to={`/product/${e.id}`}> {/* Wrap img tag with Link component */}
+                <img src={e.image} alt="" className='carticon-product-icon' />
+              </Link>
                 <p>{e.name}</p>
                 <p>${e.new_price}</p>
                 <button className='cartitems-quantity'>{cartItems[e.id]}</button>
