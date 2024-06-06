@@ -9,6 +9,10 @@ const ProductDisplay = (props) =>
 {
   const {product} = props;
   const {addToCart} = useContext(ShopContext);
+ 
+  if (!product) {
+    return null; // or return a loading spinner, or some placeholder content
+  }
 
   return (
     <div className='productdisplay'>
