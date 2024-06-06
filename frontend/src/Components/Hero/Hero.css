@@ -50,6 +50,7 @@
   color: white;
   font-size: 22px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .hero-right {
@@ -82,6 +83,10 @@
     height: 60px;
     margin: 20px;
     font-size: 18px;
+  }
+
+  .hero-latest-btn img {
+    width: 15px;
   }
 
   .hero-right img {
