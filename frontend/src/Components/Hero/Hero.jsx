@@ -18,7 +18,7 @@ const Hero = () => {
           <p>for everyone</p>
         </div>
         <div className="hero-latest-btn">
-          <Link to="new-collections" smooth={true} duration={1000}>
+          <Link to="new-collections" smooth={true} duration={500}>
             <div>Latest collections</div>
             <img src={arrow_icon} alt="" />
           </Link>
