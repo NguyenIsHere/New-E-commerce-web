@@ -1,0 +1,19 @@
+.profile-display {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-display h1 {
+  color: #333;
+}
+
+.profile-display p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+}

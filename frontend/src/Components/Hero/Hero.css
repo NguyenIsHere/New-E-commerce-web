@@ -85,6 +85,10 @@
     font-size: 18px;
   }
 
+  .hero-latest-btn img {
+    width: 15px;
+  }
+
   .hero-right img {
     width: 500px;
   }
