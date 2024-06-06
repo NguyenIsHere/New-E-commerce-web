@@ -58,6 +58,10 @@
   cursor: pointer;
 }
 
+.nav-profile img {
+  width: 40px;
+}
+
 .nav-login-cart button {
   width: 157px;
   height: 58px;
@@ -115,6 +119,10 @@
     gap: 30px;
   }
 
+  .nav-profile img {
+    width: 40px;
+  }
+
   .nav-login-cart button {
     width: 120px;
     height: 45px;
@@ -146,7 +154,7 @@
   }
 
   .nav-profile img {
-    width: 40px;
+    width: 30px;
   }
 
   .nav-login-cart button {
