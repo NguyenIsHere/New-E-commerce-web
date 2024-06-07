@@ -23,29 +23,31 @@ app.use(bodyParser.json())
 app.post("/create-payment-intent", async (req, res) => {
   
   // cartitems is an array of itemids
-    const { cartitems } = req.body;
+  const { cartitems } = req.body;
   
-    const lineItems = await Promise.all(cartitems.map(async (item) => {
-      const itemid = Object.keys(item)[0];
-      const quantity = item[itemid];
-      if(quantity > 0){
-        const product = await Product.findOne({ id: itemid });
-        return {
-          price_data: {
-            currency: "sgd",
-            product_data: {
-              name: product.name,
-              images: [product.image],
-              category: product.category,
-            },
-            price: product.new_price,
-          },
-          quantity: quantity,
-        };
-      }else {
-        return null;
-      }
-    }));
+  const arrayofitems = cartitems && cartitems.map(async (itemid) => {
+    const quantity = cartitems[itemid];
+    if(quantity > 0){
+      const product = await Product.findById.findOne({ id: itemid });
+    }else {
+      return null;
+    }
+  });
+
+  const lineItems = arrayofitems && arrayofitems.map(item =>{
+    return {
+      price_data: {
+        currency: "sgd",
+        product_data: {
+          name: product.name,
+          images: [product.image],
+          category: product.category,
+        },
+        price: product.new_price,
+      },
+      quantity: quantity,
+    };
+  });
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
