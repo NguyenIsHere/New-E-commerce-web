@@ -18,7 +18,8 @@
     cursor: pointer;
 }
 .scroll-btn:hover {
-    background: #72e0e0;
+    background: #e94762;
+    color: rgb(70, 66, 66);
 }
 @media(max-width:1280px) {
     .scroll-btn {

@@ -36,7 +36,7 @@ app.post('/subscribe', async (req, res) => {
       from: '22521011@gm.uit.edu.vn', // Sender address
       to: email, // Receiver address
       subject: 'Subscription Confirmation',
-      text: 'Thank you for subscribing to our newsletter! We pleased to give you a 50% discount when you buy directly at our shop',
+      text: 'Thank you for subscribing to our newsletter! We pleased to give you a 50% discount when you buy directly at our shop next time',
     });
 
     res.send('Subscription successful');

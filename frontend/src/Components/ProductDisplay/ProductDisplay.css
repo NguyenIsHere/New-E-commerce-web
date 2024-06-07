@@ -103,6 +103,8 @@
   font-weight: 600;
 }
 .popup{
+  font-family: 'Poppins', sans-serif;
+  font-style: bold;
   width: 400px;
   background: rgba(120, 188, 214, 0.726);
   border-radius: 6px;
