@@ -13,11 +13,17 @@ const ProductDisplay = (props) =>
 
   const [showPopup, setShowPopup] = useState(false);
   const handleAddToCart = () => {
-    addToCart(product.id);
-    setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 1000);
+    if (localStorage.getItem('auth-token')) {
+      addToCart(product.id);
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 1000);
+    }
+    else
+    {
+      window.location.replace('/login');
+    }
   };
 
   if (!product) {
