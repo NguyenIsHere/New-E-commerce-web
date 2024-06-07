@@ -1,4 +1,7 @@
-const port = 4000
+require('dotenv').config();
+const bodyParser = require('body-parser')
+const nodemailer = require('nodemailer');
+const port = 4000 || process.env.PORT
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -6,10 +9,42 @@ const jwt = require('jsonwebtoken')
 const multer = require('multer')
 const path = require('path')
 const cors = require('cors')
-const { error } = require('console')
+const { error } = require('console');
+const { getMaxListeners } = require('events');
 
 app.use(express.json())
 app.use(cors())
+app.use(bodyParser.json())
+
+// Nodemailer configuration
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: '22521011@gm.uit.edu.vn',
+    pass: '1940030169',
+  },
+});
+
+app.post('/subscribe', async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).send('Email is required');
+  }
+
+  try {
+    await transporter.sendMail({
+      from: '22521011@gm.uit.edu.vn', // Sender address
+      to: email, // Receiver address
+      subject: 'Subscription Confirmation',
+      text: 'Thank you for subscribing to our newsletter! We pleased to give you a 50% discount when you buy directly at our shop',
+    });
+
+    res.send('Subscription successful');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Error sending subscription confirmation');
+  }
+});
 
 // Database connection with MongoDB
 mongoose.connect(
