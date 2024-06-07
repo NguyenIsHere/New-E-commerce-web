@@ -46,9 +46,6 @@ const ShopCategory = (props) => {
         <button onClick={handleClickPrev} disabled={currentPage === 1}>Previous</button>
         <button onClick={handleClickNext} disabled={currentPage === totalPages}>Next</button>
       </div>
-      <div className="shopcategory-loadmore">
-        Explore More
-      </div>
     </div>
   );
 }
