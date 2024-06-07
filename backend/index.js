@@ -238,12 +238,26 @@ app.get('/newcollections', async (req, res) => {
   res.send(newcollection)
 })
 
-// Creating endpoint for popular in women section
+// Creating endpoint for popular in women, men and kid section
 app.get('/popularinwomen', async (req, res) => {
   let products = await Product.find({ category: 'women' })
   let popular_in_women = products.slice(0, 4)
   console.log('Popular in women fetched')
   res.send(popular_in_women)
+})
+
+app.get('/popularinmen', async (req, res) => {
+  let products = await Product.find({ category: 'men' })
+  let popular_in_men = products.slice(0, 4)
+  console.log('Popular in men fetched')
+  res.send(popular_in_men)
+})
+
+app.get('/popularinkid', async (req, res) => {
+  let products = await Product.find({ category: 'kid' })
+  let popular_in_kid = products.slice(0, 4)
+  console.log('Popular in kid fetched')
+  res.send(popular_in_kid)
 })
 
 // Creating middelware to fetch user
