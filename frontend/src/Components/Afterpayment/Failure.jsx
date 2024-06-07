@@ -1,6 +1,6 @@
 import React from 'react'
-import failtick from '../../Components/Assets/faillure.png'
-import '../CSS/Failure.css'
+import failtick from '../Assets/faillure.png'
+import './Failure.css'
 
 const Failure = () => {
   return (
