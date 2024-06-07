@@ -21,6 +21,4 @@ const Prouduct = () =>
   )
 }
 
-// 2:22:14
-
 export default Prouduct
