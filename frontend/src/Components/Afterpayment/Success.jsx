@@ -1,6 +1,6 @@
 import React from 'react'
-import tick from '../../Components/Assets/404-tick.png'
-import '../CSS/Success.css'
+import tick from '../Assets/404-tick.png'
+import './Success.css'
 
 const Success = () => {
   return (
