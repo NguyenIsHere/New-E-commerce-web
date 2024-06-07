@@ -1,6 +1,6 @@
-require('dotenv').config();
+require('dotenv').config()
 const bodyParser = require('body-parser')
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 const port = 4000 || process.env.PORT
 const express = require('express')
 const app = express()
@@ -12,6 +12,7 @@ const cors = require('cors')
 const { error } = require('console');
 const { getMaxListeners } = require('events');
 const stripe = require("stripe")('sk_test_51PP0KJP3vlpoz5z2LKSr05hbfWMFlnFN0WLKu1FSgeQBHjp1JF7hj04rtaFqMGvFAbePsixx4vi3117vGIuIcQRP00JVgwW6gk');
+
 
 app.use(express.json())
 app.use(express.static("public"));
@@ -62,14 +63,14 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: '22521011@gm.uit.edu.vn',
-    pass: 'fgri ekov irph xwpw',
-  },
-});
+    pass: 'fgri ekov irph xwpw'
+  }
+})
 
 app.post('/subscribe', async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.body
   if (!email) {
-    return res.status(400).send('Email is required');
+    return res.status(400).send('Email is required')
   }
 
   try {
@@ -77,15 +78,15 @@ app.post('/subscribe', async (req, res) => {
       from: '22521011@gm.uit.edu.vn', // Sender address
       to: email, // Receiver address
       subject: 'Subscription Confirmation',
-      text: 'Thank you for subscribing to our newsletter! We pleased to give you a 50% discount when you buy directly at our shop next time',
-    });
+      text: 'Thank you for subscribing to our newsletter! We pleased to give you a 50% discount when you buy directly at our shop next time'
+    })
 
-    res.send('Subscription successful');
+    res.send('Subscription successful')
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).send('Error sending subscription confirmation');
+    console.error('Error sending email:', error)
+    res.status(500).send('Error sending subscription confirmation')
   }
-});
+})
 
 // Database connection with MongoDB
 mongoose.connect(
