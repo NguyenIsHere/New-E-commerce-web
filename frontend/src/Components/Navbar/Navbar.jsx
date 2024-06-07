@@ -40,12 +40,12 @@ const Navbar = () =>
         <li onClick={()=>{setMenu("kids")}}><Link style={{textDecoration:'none'}} to='/kids'>Kids</Link> {menu==="kids"?<hr/>:<></>}</li>
       </ul>
       <div className="nav-login-cart">
-        {localStorage.getItem('auth-token')?<button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}}>Logout</button> : <Link to='/login'><button>Login</button></Link>}
+        <div className="nav-profile">
+          <Link to='/profile'>  <img src={profile_icon} alt="" /></Link>
+        </div>
         <Link to='/cart'><img src={cart_icon} alt="" /></Link>
         <div className="nav-cart-count">{getTotalCartItems()}</div>
-      </div>
-      <div className="nav-profile">
-        <Link to='/profile'>  <img src={profile_icon} alt="" /></Link>
+        {localStorage.getItem('auth-token') ? <button onClick={() => {localStorage.removeItem('auth-token'); window.location.replace('/')}}>Logout</button> : <Link to='/login'><button>Login</button></Link>}
       </div>
     </div>
   )

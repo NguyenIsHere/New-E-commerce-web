@@ -45,7 +45,6 @@ const ShopContextProvider = (props) =>
 
   const addToCart = (itemId) =>
   {
-    setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1}));
     if (localStorage.getItem('auth-token'))
     {
       fetch('http://localhost:4000/addtocart', {
@@ -59,12 +58,12 @@ const ShopContextProvider = (props) =>
       })
         .then((response) => response.json())
         .then((data) => console.log(data))
+        setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1}));
     }
   }
 
   const removeFromCart = (itemId) =>
   {
-    setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1}));
     if (localStorage.getItem('auth-token'))
     {
       fetch('http://localhost:4000/removefromcart', {
@@ -78,6 +77,7 @@ const ShopContextProvider = (props) =>
       })
         .then((response) => response.json())
         .then((data) => console.log(data))
+        setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1}));
     }
   }
 

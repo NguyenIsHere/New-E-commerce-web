@@ -11,7 +11,7 @@ const ProductDisplay = (props) =>
   const {addToCart} = useContext(ShopContext);
  
   if (!product) {
-    return null; // or return a loading spinner, or some placeholder content
+    return null; 
   }
 
   return (
