@@ -3,7 +3,9 @@ import './NewsLetter.css'
 const NewsLetter = () => {
 
   const [email,setEmail] = useState('');
-
+  const handleSubscribe = ()=>{
+    sendEmail(email);
+  }
   const sendEmail = async (email) =>{
     try {
       const response = await fetch('http://localhost:4000/subscribe', {
@@ -30,8 +32,8 @@ const NewsLetter = () => {
       <h1>Get Exclusive Offers On Your Email</h1>
       <p>Subscribe to our newsletter and stay updated</p>
       <div>
-        <input type="email" placeholder='Your Email id' value={email} onChange={(e) => {setEmail(e.target.value);}} />
-        <button onClick={sendEmail(email)}>Subscribe</button>
+        <input type="email" placeholder='Your Email id' value={email} onChange={(e) =>{setEmail(e.target.value);}} />
+        <button onClick={handleSubscribe}>Subscribe</button>
       </div>
     </div>
   )
