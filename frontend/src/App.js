@@ -12,6 +12,8 @@ import men_banner from './Components/Assets/banner_mens.png'
 import women_banner from './Components/Assets/banner_women.png'
 import kid_banner from './Components/Assets/banner_kids.png'
 import Scrolltop from './Components/Scrolltop/Scrolltop'
+import Success from './Pages/AfterPayment/Success'
+import Failure from './Pages/AfterPayment/Failure'
 
 function App () {
   return (
@@ -39,6 +41,8 @@ function App () {
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<LoginSignup />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/success' element={<Success/>} />
+          <Route path='/failure' element={<Failure/>} />
         </Routes>
         <Footer />
       </BrowserRouter>
