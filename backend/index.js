@@ -11,10 +11,51 @@ const path = require('path')
 const cors = require('cors')
 const { error } = require('console');
 const { getMaxListeners } = require('events');
+const stripe = require("stripe")('sk_test_51PP0KJP3vlpoz5z2LKSr05hbfWMFlnFN0WLKu1FSgeQBHjp1JF7hj04rtaFqMGvFAbePsixx4vi3117vGIuIcQRP00JVgwW6gk');
 
 app.use(express.json())
+app.use(express.static("public"));
 app.use(cors())
 app.use(bodyParser.json())
+
+// Creating Stripe Payment Endpoint
+app.post("/create-payment-intent", async (req, res) => {
+  
+  // cartitems is an array of itemids
+    const { cartitems } = req.body;
+  
+    const lineItems = await Promise.all(cartitems.map(async (item) => {
+      const itemid = Object.keys(item)[0];
+      const quantity = item[itemid];
+      if(quantity > 0){
+        const product = await Product.findOne({ id: itemid });
+        return {
+          price_data: {
+            currency: "sgd",
+            product_data: {
+              name: product.name,
+              images: [product.image],
+              category: product.category,
+            },
+            price: product.new_price,
+          },
+          quantity: quantity,
+        };
+      }else {
+        return null;
+      }
+    }));
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment", 
+    success_url: "",
+    cancel_url: "",
+  });
+
+  res.json({ id: session.id });
+});
 
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
