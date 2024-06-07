@@ -10,7 +10,9 @@ const ProfileDisplay = () => {
   }, []);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div className='loading-holder'>
+      <p>Please Login</p>
+    </div>;
   }
 
   return (
