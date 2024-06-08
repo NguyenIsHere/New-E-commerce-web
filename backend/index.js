@@ -11,53 +11,37 @@ const path = require('path')
 const cors = require('cors')
 const { error } = require('console');
 const { getMaxListeners } = require('events');
+const { type } = require('os')
+// This is your test secret API key.
 const stripe = require("stripe")('sk_test_51PP0KJP3vlpoz5z2LKSr05hbfWMFlnFN0WLKu1FSgeQBHjp1JF7hj04rtaFqMGvFAbePsixx4vi3117vGIuIcQRP00JVgwW6gk');
-
+const calculateOrderAmount = (items) => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
 
 app.use(express.json())
 app.use(express.static("public"));
 app.use(cors())
 app.use(bodyParser.json())
 
-// Creating Stripe Payment Endpoint
 app.post("/create-payment-intent", async (req, res) => {
-  
-  // cartitems is an array of itemids
-  const { cartitems } = req.body;
-  
-  const arrayofitems = cartitems && cartitems.map(async (itemid) => {
-    const quantity = cartitems[itemid];
-    if(quantity > 0){
-      const product = await Product.findById.findOne({ id: itemid });
-    }else {
-      return null;
-    }
+  const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "sgd",
+    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods: {
+      enabled: true,
+    },
   });
 
-  const lineItems = arrayofitems && arrayofitems.map(item =>{
-    return {
-      price_data: {
-        currency: "sgd",
-        product_data: {
-          name: product.name,
-          images: [product.image],
-          category: product.category,
-        },
-        price: product.new_price,
-      },
-      quantity: quantity,
-    };
+  res.send({
+    clientSecret: paymentIntent.client_secret,
   });
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: lineItems,
-    mode: "payment", 
-    success_url: "http://localhost:3000/success",
-    cancel_url: "http://localhost:3000/failure",
-  });
-
-  res.json({ id: session.id });
 });
 
 // Nodemailer configuration
@@ -217,7 +201,11 @@ const Users = mongoose.model('Users', {
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
 })
 
 // Creating Endpoint for registering users

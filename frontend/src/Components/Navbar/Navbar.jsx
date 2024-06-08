@@ -9,6 +9,7 @@ import cart_icon from '../Assets/cart_icon.png'
 import nav_dropdown from '../Assets/big_dropdown_icon.png'
 import {Link} from 'react-router-dom'
 import profile_icon from '../Assets/profile_icon.png'
+import admin_icon from '../Assets/admin_icon.png'
 
 const Navbar = () =>
 {
@@ -40,6 +41,11 @@ const Navbar = () =>
         <li onClick={()=>{setMenu("kids")}}><Link style={{textDecoration:'none'}} to='/kids'>Kids</Link> {menu==="kids"?<hr/>:<></>}</li>
       </ul>
       <div className="nav-login-cart">
+        <div className="nav-admin">
+          {localStorage.getItem('auth-token') && JSON.parse(localStorage.getItem('user')).isAdmin === true
+          ? <Link to='http://localhost:5173'><img src={admin_icon} alt="" /></Link>
+          : <></>}
+        </div>
         <div className="nav-profile">
           {localStorage.getItem('auth-token') ? <Link to='/profile'> <img src={profile_icon} alt="" /></Link> : <Link to='/login'><img src={profile_icon} alt="" /></Link>}
         </div>
