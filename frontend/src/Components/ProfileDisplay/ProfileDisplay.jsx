@@ -79,11 +79,16 @@ const ProfileDisplay = () => {
       
       <div className="profile-change">
         <h1>Change Profile</h1>
-        <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Your Name' />
-        <input name='gender' value={formData.gender} onChange={changeHandler} type="text" placeholder='Gender' />
-        <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder='Age' />
-        <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder='Address' />
-        <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder='Password' />
+        <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder={userData.name} />
+        <select name="gender" id="" value={formData.gender} onChange={changeHandler} defaultValue={formData.gender}>
+          <option value="" disabled selected hidden>Choose your gender</option>
+          <option value="male">Male</option>          
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder={userData.age} />
+        <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder={userData.address} />
+        <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder= "******" />
         <button onClick={handleClick}>CHANGE</button>
       </div>
     </div>
