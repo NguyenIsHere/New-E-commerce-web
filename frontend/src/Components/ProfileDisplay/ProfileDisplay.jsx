@@ -52,6 +52,11 @@ const ProfileDisplay = () => {
       // Handle network error
       console.error('Network error:', error);
     }
+    const response = await fetch("http://localhost:4000/getusers");
+    const allusers = await response.json();
+    const userafterupdate = allusers.find((user) => user.email === userData.email);
+    localStorage.setItem('user', JSON.stringify(userafterupdate));
+    window.location.reload();
   };
   
 

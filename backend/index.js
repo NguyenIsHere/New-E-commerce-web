@@ -217,6 +217,13 @@ const Users = mongoose.model('Users', {
   },
 })
 
+// Creating endpoint for getting all users from database
+app.get('/getusers', async (req, res) => {
+    const users = await Users.find({});
+    console.log('All Users Fetched');
+    res.json(users); // Send the users as a JSON response
+});
+
 // Creating Endpoint for registering users
 app.post('/signup', async (req, res) => {
   let check = await Users.findOne({ email: req.body.email })
