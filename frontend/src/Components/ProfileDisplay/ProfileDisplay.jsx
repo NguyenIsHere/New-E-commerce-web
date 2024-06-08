@@ -28,12 +28,12 @@ const ProfileDisplay = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: userData.email,
-        name: userData.name,
-        gender: userData.gender,
-        age: userData.age,
-        address: userData.address,
-        password: userData.password,
+        email: formData.email,
+        name: formData.name,
+        gender: formData.gender,
+        age: formData.age,
+        address: formData.address,
+        password: formData.password,
       }
     )}).then((resp) => resp.json())
       .then((data) =>
