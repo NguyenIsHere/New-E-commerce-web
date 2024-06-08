@@ -66,29 +66,40 @@ const ProfileDisplay = () => {
     </div>;
   }
 
+  function toSentenceCase(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
   return (
     <div className='profile-display'>
-      <h1>Profile</h1>
-      <p>Name: {userData.name}</p>
-      <p>Email: {userData.email}</p>
-      <p>Gender: {userData.gender}</p>
-      <p>Age: {userData.age}</p>
-      <p>Address: {userData.address}</p>
 
-      <hr className='hr' />
-      
       <div className="profile-change">
         <h1>Change Profile</h1>
+        <div className="info-box">
+        <label for='username'>Username:</label>
         <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder={userData.name} />
-        <select name="gender" id="" value={formData.gender} onChange={changeHandler} defaultValue={formData.gender}>
-          <option value="" disabled selected hidden>Choose your gender</option>
+        </div>
+        <div className="info-box">
+        <label for='gender'>Gender:</label>
+        <select name="gender" id="" value={formData.gender} onChange={changeHandler}>
+          <option value="" disabled hidden>{toSentenceCase(userData.gender)}</option>
           <option value="male">Male</option>          
           <option value="female">Female</option>
           <option value="other">Other</option>
         </select>
+        </div>
+        <div className="info-box">
+        <label for='age'>Age:</label>
         <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder={userData.age} />
+        </div>
+        <div className="info-box">
+        <label for='address'>Address:</label>
         <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder={userData.address} />
+       </div>
+        <div className="info-box">
+        <label for='password'>Password:</label>
         <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder= "******" />
+        </div>       
         <button onClick={handleClick}>CHANGE</button>
       </div>
     </div>

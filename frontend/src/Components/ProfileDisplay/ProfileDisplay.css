@@ -34,28 +34,9 @@
   text-align: center;
 }
 
-.profile-display h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.profile-display p {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.profile-display .hr {
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-
 .profile-change {
-  margin-top: 20px;
-  justify-content: center;
-  align-items: center;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-change h1 {
@@ -64,13 +45,40 @@
   margin-bottom: 20px;
 }
 
+.profile-change select {
+  box-sizing: border-box;
+  font-size: 14px;
+  display: block;
+  width: 30vw;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.profile-change .info-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  /* This will vertically center the items */
+  justify-content: space-between;
+  /* This will put space between the items */
+  margin-bottom: 10px;
+}
+
+.profile-change .info-box label {
+  font-size: 14px;
+  width: 100px;
+  color: #333;
+  text-align: left;
+}
+
 .profile-change input {
   box-sizing: border-box;
   font-size: 14px;
   display: block;
-  width: 100%;
+  width: 30vw;
   padding: 10px;
-  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
