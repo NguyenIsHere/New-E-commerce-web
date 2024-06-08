@@ -1,45 +1,54 @@
 import React, {useEffect, useState} from 'react';
 import './ProfileDisplay.css';
-import profile_icon from '../Assets/profile_icon.png'
 
 const ProfileDisplay = () => {
   const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUserData(user);
+  }, []);
   const [formData, setFormData] = useState({
     username: "",
     gender: "",
     age: "",
     address: "",
-    password: "",
-    email: ""
+    password: ""
   })
   const changeHandler = (e) =>
     {
       setFormData({...formData, [e.target.name]: e.target.value})
     }
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    setUserData(user);
-  }, []);
+
 
   const handleClick = async () => {
-    await fetch('http://localhost:4000/updateuser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: formData.email,
-        name: formData.name,
-        gender: formData.gender,
-        age: formData.age,
-        address: formData.address,
-        password: formData.password,
+    const requestBody = {
+      email: userData.email,
+      name: formData.username,
+      gender: formData.gender,
+      age: formData.age,
+      address: formData.address,
+      password: formData.password,
+    };
+    console.log(requestBody);
+    try {
+      const response = await fetch('http://localhost:4000/updateuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody)
+      });
+  
+      const data = await response.json();
+  
+      if (data) {
+        alert('Updated successfully');
+      } else {
+        alert('Failed');
       }
-    )}).then((resp) => resp.json())
-      .then((data) =>
-    {
-      data.success?alert(`${data}`):alert('Failed')
-    })
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
   
 

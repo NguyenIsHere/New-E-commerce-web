@@ -325,15 +325,21 @@ const fetchUser = async (req, res, next) => {
 }
 // Creating endpoint for update user data
 app.post('/updateuser', async (req, res) => {
-  await Users.findOneAndUpdate(
-    { email: req.body.email },
-    { name: req.body.name },
-    { gender: req.body.gender},
-    { age: req.body.age},
-    { address: req.body.address},
-    {password: req.body.password}
-  )
-  res.send('User data updated successfully');
+  try {
+    await Users.findOneAndUpdate(
+      { email: req.body.email },
+      {
+        name: req.body.name,
+        gender: req.body.gender,
+        age: req.body.age,
+        address: req.body.address,
+        password: req.body.password
+      }
+    );
+    res.send('Updated user data successfully');
+  } catch (error) {
+    res.send(`${error}`)
+  }
 })
 // Creating endpoint for adding products to cart
 app.post('/addtocart', fetchUser, async (req, res) => {
