@@ -29,25 +29,28 @@ const ProfileDisplay = () => {
       address: formData.address,
       password: formData.password,
     };
-    console.log(requestBody);
+
     try {
       const response = await fetch('http://localhost:4000/updateuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify(requestBody),
       });
-  
-      const data = await response.json();
-  
-      if (data) {
-        alert('Updated successfully');
+
+      if (response.ok) {
+        // Handle successful response
+        console.log('User updated successfully');
+        alert('User updated successfully');
       } else {
-        alert('Failed');
+        // Handle error response
+        console.error('Failed to update user');
+        alert('Failed to update user');
       }
     } catch (error) {
-      console.error('Error:', error);
+      // Handle network error
+      console.error('Network error:', error);
     }
   };
   
