@@ -25,3 +25,69 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.profile-display {
+  width: 40%;
+  margin: 30px auto;
+  padding: 30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-display h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-display p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.profile-display .hr {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.profile-change {
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
+.profile-change h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.profile-change input {
+  box-sizing: border-box;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.profile-change button {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.profile-change button:hover {
+  background-color: #555;
+}
