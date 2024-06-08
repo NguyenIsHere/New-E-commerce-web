@@ -5,6 +5,9 @@ const LoginSignup = () =>
   const [state, setState] = useState("Login")
   const [formData, setFormData] = useState({
     username: "",
+    gender: "",
+    age: "",
+    address: "",
     password: "",
     email: ""
   })
@@ -68,7 +71,15 @@ const LoginSignup = () =>
       <div className="loginsignup-container">
         <h1>{state}</h1>
         <div className="loginsignup-fields">
-          {state === "Sign Up" ? <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Your Name' />:<></>}
+          {state === "Sign Up" && (
+            <div>
+              <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Your Name' />
+              <input name='gender' value={formData.gender} onChange={changeHandler} type="text" placeholder='Gender' />
+              <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder='Age' />
+              <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder='Address' />
+              
+            </div>
+          )}
           <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Email Address' />
           <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder='Password' />
         </div>

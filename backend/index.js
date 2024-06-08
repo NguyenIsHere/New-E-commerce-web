@@ -188,6 +188,15 @@ const Users = mongoose.model('Users', {
   name: {
     type: String
   },
+  gender: {
+    type: String
+  },
+  age: {
+    type: Number
+  },
+  address: {
+    type: String
+  },
   email: {
     type: String,
     unique: true
@@ -224,6 +233,9 @@ app.post('/signup', async (req, res) => {
 
   const user = new Users({
     name: req.body.username,
+    gender: req.body.gender,
+    age: req.body.age,
+    address: req.body.address,
     email: req.body.email,
     password: req.body.password,
     cartData: cart
@@ -311,7 +323,18 @@ const fetchUser = async (req, res, next) => {
     }
   }
 }
-
+// Creating endpoint for update user data
+app.post('/updateuser', async (req, res) => {
+  await Users.findOneAndUpdate(
+    { email: req.body.email },
+    { name: req.body.name },
+    { gender: req.body.gender},
+    { age: req.body.age},
+    { address: req.body.address},
+    {password: req.body.password}
+  )
+  res.send('User data updated successfully');
+})
 // Creating endpoint for adding products to cart
 app.post('/addtocart', fetchUser, async (req, res) => {
   console.log('Added', req.body.itemId)
