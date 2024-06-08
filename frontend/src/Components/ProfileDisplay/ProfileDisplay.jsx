@@ -23,11 +23,11 @@ const ProfileDisplay = () => {
   const handleClick = async () => {
     const requestBody = {
       email: userData.email,
-      name: formData.username,
-      gender: formData.gender,
-      age: formData.age,
-      address: formData.address,
-      password: formData.password,
+      name: formData.username === "" ? userData.name : formData.username,
+      gender: formData.gender === "" ? userData.gender : formData.gender,
+      age: formData.age === "" ? userData.age : formData.age,
+      address: formData.address === "" ? userData.address : formData.address,
+      password: formData.password === "" ? userData.password : formData.password,
     };
 
     try {
