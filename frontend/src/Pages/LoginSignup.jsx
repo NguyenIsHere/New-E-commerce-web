@@ -54,6 +54,7 @@ const LoginSignup = () =>
     if(responseData.success)
     {
       localStorage.setItem('auth-token', responseData.token)
+      localStorage.setItem('user', JSON.stringify(responseData.user)) // Store user data in local storage
       window.location.replace('/')
     }
     else{
