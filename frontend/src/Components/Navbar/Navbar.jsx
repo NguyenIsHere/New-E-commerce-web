@@ -43,7 +43,7 @@ const Navbar = () =>
       <div className="nav-login-cart">
         <div className="nav-admin">
           {localStorage.getItem('auth-token') && JSON.parse(localStorage.getItem('user')).isAdmin === true
-          ? <Link to='http://localhost:5173'><img src={admin_icon} alt="" /></Link>
+          ? <Link target='_blank' to='http://localhost:5173'><img src={admin_icon} alt="" /></Link>
           : <></>}
         </div>
         <div className="nav-profile">
