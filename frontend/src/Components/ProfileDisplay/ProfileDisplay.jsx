@@ -64,21 +64,22 @@ const ProfileDisplay = () => {
   return (
     <div className='profile-display'>
       <h1>Profile</h1>
-        <p>Name: {userData.name}</p>
-        <p>Email: {userData.email}</p>
-        <p>Gender: {userData.gender}</p>
-        <p>Age: {userData.age}</p>
-        <p>Address: {userData.address}</p>
+      <p>Name: {userData.name}</p>
+      <p>Email: {userData.email}</p>
+      <p>Gender: {userData.gender}</p>
+      <p>Age: {userData.age}</p>
+      <p>Address: {userData.address}</p>
+
+      <hr className='hr' />
       
       <div className="profile-change">
+        <h1>Change Profile</h1>
         <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Your Name' />
         <input name='gender' value={formData.gender} onChange={changeHandler} type="text" placeholder='Gender' />
         <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder='Age' />
         <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder='Address' />
         <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder='Password' />
-        <button onClick={handleClick}>change</button>
- 
-
+        <button onClick={handleClick}>CHANGE</button>
       </div>
     </div>
   );

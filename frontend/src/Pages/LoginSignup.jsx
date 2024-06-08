@@ -76,8 +76,7 @@ const LoginSignup = () =>
               <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Your Name' />
               <input name='gender' value={formData.gender} onChange={changeHandler} type="text" placeholder='Gender' />
               <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder='Age' />
-              <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder='Address' />
-              
+              <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder='Address' />             
             </div>
           )}
           <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Email Address' />
