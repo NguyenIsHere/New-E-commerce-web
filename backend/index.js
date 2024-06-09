@@ -16,6 +16,7 @@ const axios = require('axios').default // npm install axios
 const CryptoJS = require('crypto-js') // npm install crypto-js
 const moment = require('moment') // npm install moment
 const qs = require('qs')
+const server = require('http').createServer(app)
 
 app.use(express.json())
 app.use(express.static('public'))
@@ -596,8 +597,23 @@ app.post('/removecart', async (req, res) => {
   res.send('Removed all cart items after payment success')
 })
 
-// Listening on Port
-app.listen(port, error => {
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST'], // Allow GET and POST methods
+    allowedHeaders: ['my-custom-header'], // Allow specific headers
+    credentials: true // Allow credentials
+  }
+})
+
+io.on('connection', socket => {
+  console.log('a user connected')
+  socket.on('product amount changed', data => {
+    io.emit('product changed', { itemId: data.itemId, amount: data.amount })
+  })
+})
+
+server.listen(port, error => {
   if (!error) {
     console.log('Server is running on port: ' + port)
   } else {

@@ -2,17 +2,32 @@ import React, {useEffect} from 'react'
 import { useState } from 'react'
 import './ListProduct.css'
 import cross_icon from '../../assets/cross_icon.png'
+import * as XLSX from 'xlsx';
+import { io } from 'socket.io-client';
 
 const ListProduct = () =>
 {
   const [allproducts, setAllProducts] = useState([])
-  
+
   const fetchInfo = async () =>
   {
     await fetch('http://localhost:4000/allproducts')
       .then((res) => res.json())
       .then((data) => {setAllProducts(data)})
   }
+
+  useEffect(() => {
+    const socket = io('http://localhost:4000'); // replace with your server's URL
+  
+    socket.on('product changed', (data) => {
+      // update the product amount
+      fetchInfo();
+    });
+  
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() =>
   {
@@ -33,9 +48,20 @@ const ListProduct = () =>
     await fetchInfo();
   }
 
+  const exportToExcel = () => {
+    const productsForExcel = allproducts.map(({ _id, id, name, image, category, new_price, old_price, amount, date }) => ({
+      _id, id, name, image, category, new_price, old_price, amount, date
+    }));
+  
+    const ws = XLSX.utils.json_to_sheet(productsForExcel);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Products");
+    XLSX.writeFile(wb, "products.xlsx");
+  }
 
   return (
     <div className='list-product'>
+      <button className='export-excel' onClick={exportToExcel}>Export to Excel</button>
       <h1>All Products List</h1>
       <div className="listproduct-format-main">
         <p>Products</p>

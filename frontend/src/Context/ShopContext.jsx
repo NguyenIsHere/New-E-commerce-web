@@ -1,5 +1,5 @@
 import React, {createContext,useEffect,useState} from 'react'
-
+import { io } from 'socket.io-client';
 
 export const ShopContext = createContext(null);
 
@@ -58,7 +58,7 @@ const ShopContextProvider = (props) =>
         });
     }
   }
-
+  const socket = io('http://localhost:4000'); // replace with your server's URL
   const [isLoading, setIsLoading] = useState(false);
   
   const addToCart  = (itemId, amount) => {
@@ -79,6 +79,7 @@ const ShopContextProvider = (props) =>
           console.log(data);
           setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1}));
           fetchProductData(); // fetch the product data again
+          socket.emit('product amount changed', { itemId: itemId, amount: amount }); // announce to admin page
         }).finally(() => setIsLoading(false));        
     }
   }
@@ -102,6 +103,7 @@ const ShopContextProvider = (props) =>
           console.log(data);
           setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1}));
           fetchProductData(); // fetch the product data again
+          socket.emit('product amount changed', { itemId: itemId, amount: amount }); // announce to admin page
         }).finally(() => setIsLoading(false));
     }
   }
