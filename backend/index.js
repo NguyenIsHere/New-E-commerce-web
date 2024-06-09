@@ -103,7 +103,6 @@ app.post("/payment", async (req, res) => {
     extraData: extraData,
     orderGroupId: orderGroupId,
     signature: signature,
-    email: req.body.user_email,
   });
 
   //option for axios
@@ -124,7 +123,7 @@ app.post("/payment", async (req, res) => {
     // Save payment to database after payment request sent to MoMo
     const payment = new Payment({
       orderId: orderId,
-      user_email: req.body.user_email,
+      user_email: req.body.email,
       amount: amount,
     });
     console.log("Payment created: ", payment);
@@ -143,65 +142,30 @@ app.post("/payment", async (req, res) => {
 app.post("/callback", async (req, res) => {
   console.log("callback:: ");
   console.log(req.body);
-  const requestBody = {
-    orderId: req.body.orderId,
-    email: req.body.user_email,
-  };
-  await fetch("http://localhost:4000/transaction-status", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(requestBody),
-  });
-});
-// sometime callback can't resolve, so we need to check order status by calling to MoMo server
-// creating endpoint for check order status
-app.post("/transaction-status", async (req, res) => {
-  const { orderId } = req.body.orderId;
 
-  const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
+  //update database
 
-  const crypto = require("crypto");
-  const signature = crypto
-    .createHmac("sha256", secretKey)
-    .update(rawSignature)
-    .digest("hex");
+  if (req.body.resultCode === 0) {
+    await fetch("http://localhost:4000/updatestate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ orderId: req.body.orderId }),
+    });
 
-  const requestBody = JSON.stringify({
-    partnerCode: "MOMO",
-    requestId: orderId,
-    orderId: orderId,
-    signature: signature,
-    lang: "vi",
-  });
+    const orderId = req.body.orderId;
+    const payment = await Payment.findOne({ orderId });
+    const email_payment = payment.user_email;
 
-  //option for axios
-  const options = {
-    method: "POST",
-    url: "https://test-payment.momo.vn/v2/gateway/api/query",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: requestBody,
-  };
-  let result = await axios(options);
-  if (result.data.resultCode === 0) {
-    await Payment.findOneAndUpdate(
-      { orderId: orderId },
-      {
-        status: "success",
-      }
-    );
-    console.log("Updated payment status");
-    let cart = {};
-    for (let index = 0; index < 300 + 1; index++) {
-      cart[index] = 0;
-    }
-    await Users.findOneAndUpdate({ email: req.body.email }, { cartData: cart });
-    console.log("Removed cart");
+    await fetch("http://localhost:4000/removecart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email_payment }),
+    });
   }
-  return res.status(200).json(result.data);
 });
 //
 //
@@ -570,6 +534,23 @@ app.post("/getcart", fetchUser, async (req, res) => {
   res.json(userData.cartData);
 });
 
+app.post("/updatestate", async (req, res) => {
+  await Payment.findOneAndUpdate(
+    { orderId: req.body.orderId },
+    { status: "success" }
+  );
+  console.log("Updated payment status");
+  res.send("Updated");
+});
+app.post("/removecart", async (req, res) => {
+  let cart = {};
+  for (let index = 0; index < 300 + 1; index++) {
+    cart[index] = 0;
+  }
+  await Users.findOneAndUpdate({ email: req.body.email }, { cartData: cart });
+  console.log("Removed cart after payment");
+  res.send("Removed all cart items after payment success");
+});
 // Listening on Port
 app.listen(port, (error) => {
   if (!error) {
