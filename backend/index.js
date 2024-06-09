@@ -103,8 +103,7 @@ app.post('/payment', async (req, res) => {
     autoCapture: autoCapture,
     extraData: extraData,
     orderGroupId: orderGroupId,
-    signature: signature,
-    email: req.body.user_email
+    signature: signature
   })
 
   //option for axios
@@ -612,6 +611,32 @@ app.post('/getcart', fetchUser, async (req, res) => {
   res.json(userData.cartData)
 })
 
+app.post('/updatestate', async (req, res) => {
+  await Payment.findOneAndUpdate(
+    { orderId: req.body.orderId },
+    { status: 'success' }
+  )
+  console.log('Updated payment status')
+  res.send('Updated')
+})
+
+app.post('/updatestate', async (req, res) => {
+  await Payment.findOneAndUpdate(
+    { orderId: req.body.orderId },
+    { status: 'success' }
+  )
+  console.log('Updated payment status')
+  res.send('Updated')
+})
+app.post('/removecart', async (req, res) => {
+  let cart = {}
+  for (let index = 0; index < 300 + 1; index++) {
+    cart[index] = 0
+  }
+  await Users.findOneAndUpdate({ email: req.body.email }, { cartData: cart })
+  console.log('Removed cart after payment')
+  res.send('Removed all cart items after payment success')
+})
 // Listening on Port
 app.listen(port, error => {
   if (!error) {
