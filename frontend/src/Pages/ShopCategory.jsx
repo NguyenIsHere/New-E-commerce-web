@@ -31,11 +31,8 @@ const ShopCategory = (props) => {
       <img className='shopcategory-banner' src={props.banner} alt="" />
       <div className="shopcategory-indexSort">
         <p>
-          <span>Showing {(currentPage - 1) * itemsPerPage + 1}-{currentPage * itemsPerPage} out of {categoryProducts.length} products</span>
+        <span>Showing {(currentPage - 1) * itemsPerPage + 1}-{Math.min(currentPage * itemsPerPage, categoryProducts.length)} out of {categoryProducts.length} products</span>
         </p>
-        <div className="shopcategory-sort">
-          Sort by <img src={dropdown_icon} alt="" />
-        </div>
       </div>
       <div className="shopcategory-products">
         {currentProducts.map((item, i) => (
