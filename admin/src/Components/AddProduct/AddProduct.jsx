@@ -56,7 +56,6 @@ const AddProduct = () =>
         data.success?alert('Product Added'):alert('Failed')
       })
     }
-
   }
 
   return (
@@ -90,12 +89,12 @@ const AddProduct = () =>
         </select>
       </div>
       <div className="addproduct-itemfield">
-        <label htmlFor="file-input">
+        <label htmlFor="image-input">
           <img src={image?URL.createObjectURL(image):upload_area} className='addproduct-thumbnail-img' alt="" />      
         </label>     
-        <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
-      </div>
-      <button onClick={Add_Product} className='addproduct-btn'>Add</button>
+        <input onChange={imageHandler} type="file" name='image' id='image-input' hidden />
+      </div>   
+      <button onClick={Add_Product} className='addproduct-btn'>Add</button>     
     </div>
   )
 }
