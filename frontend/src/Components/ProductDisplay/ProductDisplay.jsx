@@ -60,16 +60,6 @@ const ProductDisplay = (props) =>
           <div className="productdisplay-right-description">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur magnam nisi culpa velit ipsam dignissimos nulla cupiditate voluptatem officia corrupti eos assumenda et voluptates aliquid, accusamus quas. Aperiam, aut asperiores!
           </div>
-          <div className="productdisplay-right-size">
-            <h1>Select Size</h1>
-            <div className="productdisplay-right-sizes">
-              <div>S</div>
-              <div>M</div>
-              <div>L</div>
-              <div>XL</div>
-              <div>XXL</div>
-            </div>
-          </div>
           <button onClick={handleAddToCart}>ADD TO CART</button>
           <p className='productdisplay-right-category'><span>Category :</span> Women, T-Shirt, Crop Top</p>
           <p className='productdisplay-right-category'><span>Tags :</span> Modern, Latest</p>
