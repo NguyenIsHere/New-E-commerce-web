@@ -1,4 +1,4 @@
-import {React,useContext, useState} from 'react'
+import {React,useContext} from 'react'
 import './CartItems.css'
 import {ShopContext} from '../../Context/ShopContext'
 import remove_icon from '../Assets/cart_cross_icon.png'
