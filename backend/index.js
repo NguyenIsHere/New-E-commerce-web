@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 //  ****************************** PAYMENT WITH MOMO ******************************
 //
 //
+
 var accessKey = "F8BBA842ECF85";
 var secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 // creating endpoint for payment
@@ -102,6 +103,7 @@ app.post("/payment", async (req, res) => {
     extraData: extraData,
     orderGroupId: orderGroupId,
     signature: signature,
+    email: req.body.user_email,
   });
 
   //option for axios
@@ -141,10 +143,10 @@ app.post("/payment", async (req, res) => {
 app.post("/callback", async (req, res) => {
   console.log("callback:: ");
   console.log(req.body);
-  const requestBody = JSON.stringify({
+  const requestBody = {
     orderId: req.body.orderId,
-    email: localStorage.getItem("user").email,
-  });
+    email: req.body.user_email,
+  };
   await fetch("http://localhost:4000/transaction-status", {
     method: "POST",
     headers: {
@@ -156,7 +158,7 @@ app.post("/callback", async (req, res) => {
 // sometime callback can't resolve, so we need to check order status by calling to MoMo server
 // creating endpoint for check order status
 app.post("/transaction-status", async (req, res) => {
-  const { orderId } = req.body;
+  const { orderId } = req.body.orderId;
 
   const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
 
