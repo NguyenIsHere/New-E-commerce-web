@@ -5,16 +5,16 @@ import star_dull_icon from '../Assets/star_dull_icon.png'
 import {ShopContext} from '../../Context/ShopContext'
 import tick from '../Assets/404-tick.png'
 
-
 const ProductDisplay = (props) =>
 {
   const {product} = props;
   const {addToCart} = useContext(ShopContext);
-
   const [showPopup, setShowPopup] = useState(false);
+
   const handleAddToCart = () => {
-    if (localStorage.getItem('auth-token')) {
-      addToCart(product.id);
+    if (localStorage.getItem('auth-token'))
+    {
+      addToCart(product.id, product.amount);
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
@@ -60,7 +60,13 @@ const ProductDisplay = (props) =>
           <div className="productdisplay-right-description">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur magnam nisi culpa velit ipsam dignissimos nulla cupiditate voluptatem officia corrupti eos assumenda et voluptates aliquid, accusamus quas. Aperiam, aut asperiores!
           </div>
-          <button onClick={handleAddToCart}>ADD TO CART</button>
+          <button 
+            onClick={handleAddToCart} 
+            disabled={product.amount === 0}
+            className={product.amount === 0 ? 'out-of-stock' : ''}
+          >
+            {product.amount === 0 ? 'Out of Stock' : 'ADD TO CART'}
+          </button>
           <p className='productdisplay-right-category'><span>Category :</span> Women, T-Shirt, Crop Top</p>
           <p className='productdisplay-right-category'><span>Tags :</span> Modern, Latest</p>
         </div>

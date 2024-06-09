@@ -311,7 +311,7 @@ app.post('/removeproduct', async (req, res) => {
 
 // Creating API For Getting All Products
 app.get('/allproducts', async (req, res) => {
-  let products = await Product.find({ amount: { $gt: 0 } })
+  let products = await Product.find({})
   console.log('All Products Fetched')
   res.send(products)
 })
@@ -510,7 +510,16 @@ app.post('/updateuser', async (req, res) => {
 // Creating endpoint for adding products to cart
 app.post('/addtocart', fetchUser, async (req, res) => {
   try {
-    console.log('Added', req.body.itemId)
+    let productData = await Product.findOne({ id: req.body.itemId })
+    if (productData.amount > 0) {
+      productData.amount -= 1
+    }
+
+    await Product.findOneAndUpdate(
+      { id: req.body.itemId },
+      { amount: productData.amount }
+    )
+
     let userData = await Users.findOne({ _id: req.user.id })
     if (userData.cartData[req.body.itemId]) {
       userData.cartData[req.body.itemId] += 1
@@ -518,21 +527,14 @@ app.post('/addtocart', fetchUser, async (req, res) => {
       userData.cartData[req.body.itemId] = 1
     }
 
-    let productData = await Product.findOne({ id: req.body.itemId })
-    if (!productData.amount) {
-      productData.amount = 0
-    }
-    productData.amount -= 1
-    await Product.findOneAndUpdate(
-      { id: req.body.itemId },
-      { amount: productData.amount }
-    )
-
     await Users.findOneAndUpdate(
       { _id: req.user.id },
       { cartData: userData.cartData }
     )
-    res.send('Added')
+
+    console.log('Added', req.body.itemId, req.body.amount)
+
+    res.json({ message: 'Added' })
   } catch (error) {
     console.error(error)
     res.status(500).send('Server error')
@@ -542,27 +544,26 @@ app.post('/addtocart', fetchUser, async (req, res) => {
 // creating endpoint fore removing products from cartdata
 app.post('/removefromcart', fetchUser, async (req, res) => {
   try {
-    console.log('Removed', req.body.itemId)
-    let userData = await Users.findOne({ _id: req.user.id })
-    if ((userData.cartData[req.body.itemId] || 0) > 0) {
-      userData.cartData[req.body.itemId] -= 1
-    }
-
     let productData = await Product.findOne({ id: req.body.itemId })
-    if (!productData.amount) {
-      productData.amount = 0
-    }
     productData.amount += 1
+
     await Product.findOneAndUpdate(
       { id: req.body.itemId },
       { amount: productData.amount }
     )
 
+    let userData = await Users.findOne({ _id: req.user.id })
+    if ((userData.cartData[req.body.itemId] || 0) > 0) {
+      userData.cartData[req.body.itemId] -= 1
+    }
+
     await Users.findOneAndUpdate(
       { _id: req.user.id },
       { cartData: userData.cartData }
     )
-    res.send('Removed')
+
+    console.log('Removed', req.body.itemId, req.body.amount)
+    res.json({ message: 'Removed' })
   } catch (error) {
     console.error(error)
     res.status(500).send('Server error')

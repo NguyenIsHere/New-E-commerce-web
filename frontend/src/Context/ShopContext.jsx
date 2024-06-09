@@ -42,9 +42,29 @@ const ShopContextProvider = (props) =>
         .then((data) => setCartItems(data))
     }
   }, [])
-  
-  const addToCart = (itemId) => {
+
+  const fetchProductData = () => {
     if (localStorage.getItem('auth-token')) {
+      fetch('http://localhost:4000/allproducts', {
+        method: 'GET',
+        headers: {
+          'auth-token': `${localStorage.getItem('auth-token')}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setAll_Product(data);
+        });
+    }
+  }
+
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const addToCart  = (itemId, amount) => {
+    if (!isLoading && localStorage.getItem('auth-token'))
+    {
+      setIsLoading(true);
       fetch('http://localhost:4000/addtocart', {
         method: 'POST',
         headers: {
@@ -52,19 +72,22 @@ const ShopContextProvider = (props) =>
           'auth-token': `${localStorage.getItem('auth-token')}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ itemId: itemId })
+        body: JSON.stringify({itemId: itemId, amount: amount})
       })
         .then((response) => response.json())
-        .then((data) =>           console.log(data)) 
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-        
+        .then((data) => {
+          console.log(data);
+          setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1}));
+          fetchProductData(); // fetch the product data again
+        }).finally(() => setIsLoading(false));        
     }
   }
-  
-  const removeFromCart = (itemId) =>
+
+  const removeFromCart = (itemId,amount) =>
   {
-    if (localStorage.getItem('auth-token'))
+    if (!isLoading && localStorage.getItem('auth-token'))
     {
+      setIsLoading(true);
       fetch('http://localhost:4000/removefromcart', {
         method: 'POST',
         headers: {
@@ -72,11 +95,14 @@ const ShopContextProvider = (props) =>
           'auth-token': `${localStorage.getItem('auth-token')}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({itemId: itemId})
+        body: JSON.stringify({itemId: itemId, amount: amount})
       })
         .then((response) => response.json())
-        .then((data) => console.log(data))
-        setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1}));
+        .then((data) => {
+          console.log(data);
+          setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1}));
+          fetchProductData(); // fetch the product data again
+        }).finally(() => setIsLoading(false));
     }
   }
 

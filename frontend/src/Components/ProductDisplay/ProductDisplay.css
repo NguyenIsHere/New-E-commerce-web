@@ -75,6 +75,10 @@
   cursor: pointer;
 }
 
+.productdisplay-right .out-of-stock {
+  background: grey;
+}
+
 .productdisplay-right-category {
   margin-top: 10px;
 }
