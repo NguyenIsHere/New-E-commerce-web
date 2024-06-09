@@ -10,7 +10,8 @@ const CartItems = () =>
   const handleClick = async () =>{
     try {
       const requestbody = {
-        amount:getTotalCartAmount()+1000
+        amount:getTotalCartAmount()+1000,
+        user_email:JSON.parse(localStorage.getItem('user')).email,
       };
       const response = await fetch('http://localhost:4000/payment', {
         method: 'POST',
