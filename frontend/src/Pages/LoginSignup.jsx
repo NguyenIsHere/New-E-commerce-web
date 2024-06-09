@@ -74,7 +74,12 @@ const LoginSignup = () =>
           {state === "Sign Up" && (
             <div>
               <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Your Name' />
-              <input name='gender' value={formData.gender} onChange={changeHandler} type="text" placeholder='Gender' />
+              <select name="gender" id="" value={formData.gender} onChange={changeHandler}>
+                <option value="" selected disabled hidden>Choose your gender</option>
+                <option value="male">Male</option>          
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
               <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder='Age' />
               <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder='Address' />             
             </div>

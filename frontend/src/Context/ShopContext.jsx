@@ -41,12 +41,10 @@ const ShopContextProvider = (props) =>
         .then((response) => response.json())
         .then((data) => setCartItems(data))
     }
-  },[])
-
-  const addToCart = (itemId) =>
-  {
-    if (localStorage.getItem('auth-token'))
-    {
+  }, [])
+  
+  const addToCart = (itemId) => {
+    if (localStorage.getItem('auth-token')) {
       fetch('http://localhost:4000/addtocart', {
         method: 'POST',
         headers: {
@@ -54,14 +52,15 @@ const ShopContextProvider = (props) =>
           'auth-token': `${localStorage.getItem('auth-token')}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({itemId: itemId})
+        body: JSON.stringify({ itemId: itemId })
       })
         .then((response) => response.json())
-        .then((data) => console.log(data))
-        setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1}));
+        .then((data) =>           console.log(data)) 
+        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+        
     }
   }
-
+  
   const removeFromCart = (itemId) =>
   {
     if (localStorage.getItem('auth-token'))

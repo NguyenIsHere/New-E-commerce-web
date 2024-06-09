@@ -5,7 +5,7 @@ import upload_area from '../../assets/upload_area.svg'
 const AddProduct = () =>
 {
   const [image, setImage] = useState(false);
-  const [productDetails,setProductDetails] = useState({name:"",image:"",category:"women",new_price:"",old_price:""})
+  const [productDetails,setProductDetails] = useState({name:"",image:"",category:"women",amount:"",new_price:"",old_price:""})
 
   const imageHandler = (e) =>
   {
@@ -68,11 +68,17 @@ const AddProduct = () =>
       <div className="addproduct-price">
         <div className="addproduct-itemfield">
           <p>Price</p>
-          <input value={productDetails.old_price} onChange={changeHandler} type="text" name='old_price' placeholder='Type here' />
+          <input value={productDetails.old_price} onChange={changeHandler} type="number" name='old_price' placeholder='Type here' />
         </div>
         <div className="addproduct-itemfield">
           <p>Offer Price</p>
-          <input value={productDetails.new_price} onChange={changeHandler} type="text" name='new_price' placeholder='Type here' />
+          <input value={productDetails.new_price} onChange={changeHandler} type="number" name='new_price' placeholder='Type here' />
+        </div>
+      </div>
+      <div className="addproduct-amount">
+        <div className="addproduct-itemfield">
+          <p>Amount</p>
+          <input value={productDetails.amount} onChange={changeHandler} type="number" name='amount' placeholder='Type here' />
         </div>
       </div>
       <div className="addproduct-itemfield">
