@@ -66,10 +66,6 @@ const ProfileDisplay = () => {
     </div>;
   }
 
-  function toSentenceCase(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
-
   return (
     <div className='profile-display'>
       <div className="profile-show">

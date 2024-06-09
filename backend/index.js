@@ -118,6 +118,16 @@ app.post("/payment", async (req, res) => {
   let result;
   try {
     result = await axios(options);
+
+    // Save payment to database after payment request sent to MoMo
+    const payment = new Payment({
+      orderId: orderId,
+      user_email: req.body.user_email,
+      amount: amount,
+    });
+    console.log("Payment created: ", payment);
+    await payment.save();
+
     return res.status(200).json(result.data);
   } catch (error) {
     console.log(error);
@@ -131,13 +141,16 @@ app.post("/payment", async (req, res) => {
 app.post("/callback", async (req, res) => {
   console.log("callback:: ");
   console.log(req.body);
-  const orderId = req.body.orderId;
-  const response = await fetch("http://localhost:4000/transaction-status", {
+  const requestBody = JSON.stringify({
+    orderId: req.body.orderId,
+    email: localStorage.getItem("user").email,
+  });
+  await fetch("http://localhost:4000/transaction-status", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(orderId),
+    body: JSON.stringify(requestBody),
   });
 });
 // sometime callback can't resolve, so we need to check order status by calling to MoMo server
@@ -171,7 +184,21 @@ app.post("/transaction-status", async (req, res) => {
     data: requestBody,
   };
   let result = await axios(options);
-
+  if (result.data.resultCode === 0) {
+    await Payment.findOneAndUpdate(
+      { orderId: orderId },
+      {
+        status: "success",
+      }
+    );
+    console.log("Updated payment status");
+    let cart = {};
+    for (let index = 0; index < 300 + 1; index++) {
+      cart[index] = 0;
+    }
+    await Users.findOneAndUpdate({ email: req.body.email }, { cartData: cart });
+    console.log("Removed cart");
+  }
   return res.status(200).json(result.data);
 });
 //
@@ -241,7 +268,7 @@ app.post("/upload", upload.single("product"), (req, res) => {
   });
 });
 
-// Schema for Creatin Products
+// Schema for Creating Products
 const Product = mongoose.model("Product", {
   id: {
     type: Number,
@@ -356,6 +383,31 @@ app.get("/getusers", async (req, res) => {
   const users = await Users.find({});
   console.log("All Users Fetched");
   res.json(users); // Send the users as a JSON response
+});
+
+// Schema for Creating Payment
+const Payment = mongoose.model("Payment", {
+  orderId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  user_email: {
+    type: String,
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  status: {
+    type: String,
+    default: "pending",
+  },
 });
 
 // Creating Endpoint for registering users
@@ -482,6 +534,7 @@ app.post("/updateuser", async (req, res) => {
     res.send(`${error}`);
   }
 });
+
 // Creating endpoint for adding products to cart
 app.post("/addtocart", fetchUser, async (req, res) => {
   console.log("Added", req.body.itemId);
