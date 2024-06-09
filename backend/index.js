@@ -131,7 +131,14 @@ app.post("/payment", async (req, res) => {
 app.post("/callback", async (req, res) => {
   console.log("callback:: ");
   console.log(req.body);
-  // update order
+  const orderId = req.body.orderId;
+  const response = await fetch("http://localhost:4000/transaction-status", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(orderId),
+  });
 });
 // sometime callback can't resolve, so we need to check order status by calling to MoMo server
 // creating endpoint for check order status

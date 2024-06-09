@@ -97,12 +97,12 @@ const ProfileDisplay = () => {
         <h1>Change Profile</h1>
         <div className="info-box">
         <label for='username'>Username:</label>
-        <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder={userData.name} />
+        <input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder="Your name" />
         </div>
         <div className="info-box">
         <label for='gender'>Gender:</label>
         <select name="gender" id="" value={formData.gender} onChange={changeHandler}>
-          <option value="" disabled hidden>{toSentenceCase(userData.gender)}</option>
+          <option value="" selected disabled hidden>Choose your gender</option>
           <option value="male">Male</option>          
           <option value="female">Female</option>
           <option value="other">Other</option>
@@ -110,15 +110,15 @@ const ProfileDisplay = () => {
         </div>
         <div className="info-box">
         <label for='age'>Age:</label>
-        <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder={userData.age} />
+        <input name='age' value={formData.age} onChange={changeHandler} type="number" placeholder="Your age" />
         </div>
         <div className="info-box">
         <label for='address'>Address:</label>
-        <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder={userData.address} />
+        <input name='address' value={formData.address} onChange={changeHandler} type="text" placeholder="Your address" />
        </div>
         <div className="info-box">
         <label for='password'>Password:</label>
-        <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder= "******" />
+        <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder= "Your password" />
         </div>       
         <button onClick={handleClick}>CHANGE</button>
       </div>
