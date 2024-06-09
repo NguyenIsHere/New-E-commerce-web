@@ -143,65 +143,30 @@ app.post('/payment', async (req, res) => {
 app.post('/callback', async (req, res) => {
   console.log('callback:: ')
   console.log(req.body)
-  const requestBody = {
-    orderId: req.body.orderId,
-    email: req.body.user_email
+
+  //update database
+
+  if (req.body.resultCode === 0) {
+    await fetch('http://localhost:4000/updatestate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ orderId: req.body.orderId })
+    })
+
+    const orderId = req.body.orderId
+    const payment = await Payment.findOne({ orderId })
+    const email_payment = payment.user_email
+
+    await fetch('http://localhost:4000/removecart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email_payment })
+    })
   }
-  await fetch('http://localhost:4000/transaction-status', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(requestBody)
-  })
-})
-// sometime callback can't resolve, so we need to check order status by calling to MoMo server
-// creating endpoint for check order status
-app.post('/transaction-status', async (req, res) => {
-  const { orderId } = req.body.orderId
-
-  const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`
-
-  const crypto = require('crypto')
-  const signature = crypto
-    .createHmac('sha256', secretKey)
-    .update(rawSignature)
-    .digest('hex')
-
-  const requestBody = JSON.stringify({
-    partnerCode: 'MOMO',
-    requestId: orderId,
-    orderId: orderId,
-    signature: signature,
-    lang: 'vi'
-  })
-
-  //option for axios
-  const options = {
-    method: 'POST',
-    url: 'https://test-payment.momo.vn/v2/gateway/api/query',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    data: requestBody
-  }
-  let result = await axios(options)
-  if (result.data.resultCode === 0) {
-    await Payment.findOneAndUpdate(
-      { orderId: orderId },
-      {
-        status: 'success'
-      }
-    )
-    console.log('Updated payment status')
-    let cart = {}
-    for (let index = 0; index < 300 + 1; index++) {
-      cart[index] = 0
-    }
-    await Users.findOneAndUpdate({ email: req.body.email }, { cartData: cart })
-    console.log('Removed cart')
-  }
-  return res.status(200).json(result.data)
 })
 //
 //
@@ -310,6 +275,7 @@ const Product = mongoose.model('Product', {
   }
 })
 
+// Creating endpoint for manual add product
 app.post('/addproduct', async (req, res) => {
   let products = await Product.find({})
   let id
@@ -628,6 +594,7 @@ app.post('/updatestate', async (req, res) => {
   console.log('Updated payment status')
   res.send('Updated')
 })
+
 app.post('/removecart', async (req, res) => {
   let cart = {}
   for (let index = 0; index < 300 + 1; index++) {
