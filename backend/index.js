@@ -30,7 +30,6 @@ app.use(express.urlencoded({ extended: true }))
 
 var accessKey = 'F8BBA842ECF85'
 var secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz'
-
 // creating endpoint for payment
 app.post('/payment', async (req, res) => {
   //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
@@ -124,7 +123,7 @@ app.post('/payment', async (req, res) => {
     // Save payment to database after payment request sent to MoMo
     const payment = new Payment({
       orderId: orderId,
-      user_email: req.body.user_email,
+      user_email: req.body.email,
       amount: amount
     })
     console.log('Payment created: ', payment)
@@ -586,15 +585,6 @@ app.post('/updatestate', async (req, res) => {
   res.send('Updated')
 })
 
-app.post('/updatestate', async (req, res) => {
-  await Payment.findOneAndUpdate(
-    { orderId: req.body.orderId },
-    { status: 'success' }
-  )
-  console.log('Updated payment status')
-  res.send('Updated')
-})
-
 app.post('/removecart', async (req, res) => {
   let cart = {}
   for (let index = 0; index < 300 + 1; index++) {
@@ -604,6 +594,7 @@ app.post('/removecart', async (req, res) => {
   console.log('Removed cart after payment')
   res.send('Removed all cart items after payment success')
 })
+
 // Listening on Port
 app.listen(port, error => {
   if (!error) {
