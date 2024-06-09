@@ -72,6 +72,26 @@ const ProfileDisplay = () => {
 
   return (
     <div className='profile-display'>
+      <div className="profile-show">
+        <h1>Profile</h1>
+        <div className="info-box">
+          <p>Username: {userData.name}</p>
+        </div>
+        <div className="info-box">
+          <p>Email: {userData.email}</p>
+        </div>
+          <div className="info-box">
+          <p>Gender: {userData.gender}</p>
+        </div>
+        <div className="info-box">
+          <p>Age: {userData.age}</p>
+        </div>
+        <div className="info-box">
+          <p>Adress: {userData.address}</p>    
+        </div>
+      </div>
+
+      <hr className='hr' />
 
       <div className="profile-change">
         <h1>Change Profile</h1>
