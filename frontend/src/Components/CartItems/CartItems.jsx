@@ -6,7 +6,26 @@ import {Link} from 'react-router-dom'
 
 const CartItems = () =>
 {
-  const {getTotalCartAmount,all_product,cartItems,removeFromCart} = useContext(ShopContext);  
+  const {getTotalCartAmount,all_product,cartItems,removeFromCart} = useContext(ShopContext);
+  const handleClick = async () =>{
+    try {
+      const requestbody = {
+        amount:getTotalCartAmount()+1000
+      };
+      const response = await fetch('http://localhost:4000/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestbody),
+      });
+      const data = await response.json();
+      console.log(data);      
+      window.location.href = data.shortLink;
+    } catch (error) {
+      console.log('Network error:', error)
+    }
+  }
   return (
     <div className='cartitems'>
       <div className="cartitems-format-main">
@@ -58,9 +77,7 @@ const CartItems = () =>
               <h3>${getTotalCartAmount()}</h3>
             </div>
           </div>
-          <Link to='/checkout'>
-          <button>PROCEED TO CHECKOUT</button>
-          </Link>
+          <button onClick={handleClick}>PROCEED TO CHECKOUT</button>
         </div>
         <div className="cartitems-promocode">
           <p>If you have a promo code, Enter it here</p>
