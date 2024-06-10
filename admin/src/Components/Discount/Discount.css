@@ -1,83 +1,113 @@
-.add-and-list_code{
-    display: flex;
+.add-and-list_code {
+  display: flex;
+  width: 100%;
 }
-.add-code{
-    box-sizing: border-box;
-    width: fit-content;
-    height: fit-content;
-    max-width: max-content;
-    padding: 30px 50px;
-    border-radius: 6px;
-    margin: 20px 30px; 
-    background: white;
+
+.add-code {
+  box-sizing: border-box;
+  width: fit-content;
+  height: fit-content;
+  max-width: max-content;
+  padding: 30px 50px;
+  border-radius: 6px;
+  margin: 50px 30px;
+  background: white;
 }
+
 .addcode-itemfield {
-    width: 100%;
-    color: #7b7b7b;
-    font-size: 16px;
-  }
+  width: 100%;
+  color: #7b7b7b;
+  font-size: 16px;
+}
 
 .addcode-itemfield input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 50px;
-    border-radius: 4px;
-    padding-left: 15px;
-    border: 1px solid #c3c3c3;
-    outline: none;
-    color: #7b7b7b;
-    font-family: 'Poppins';
-    font-size: 14px;
-  }
-  .add-code-selector {
-    padding: 10px;
-    width: 100%;
-    height: 50px;
-    font-size: 14px;
-    color: #7b7b7b;
-    border: 1px solid #7b7b7b;
-    border-radius: 4px;
-  }
-  .addcode-btn {
-    margin-top: 20px;
-    width: 120px;
-    height: 50px;
-    border-radius: 4px;
-    background: #6079ff;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-  }
-  .list-code {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: fit-content;
-    height: fit-content;
-    padding: 10px 50px;
-    margin: 30px;
-    border-radius: 6px;
-    background: white;
-  }
-  .listcode-format-main {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    width: 100%;
-    padding: 20px 0px;
-    color: #454545;
-    font-size: 15px;
-    font-weight: 600;
-    justify-items: center;
-  }
-  .listcode-format {
-    align-items: center;
-    font-weight: 500;
-    padding: 20px 0px;
-  }
-  .listcode-allcodes{
-    overflow-y: auto;
-    width: 100%;
-  }
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  border-radius: 4px;
+  padding-left: 15px;
+  border: 1px solid #c3c3c3;
+  outline: none;
+  color: #7b7b7b;
+  font-family: 'Poppins';
+  font-size: 14px;
+}
+
+.add-code-selector {
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  color: #7b7b7b;
+  border: 1px solid #7b7b7b;
+  border-radius: 4px;
+}
+
+.addcode-btn {
+  margin-top: 20px;
+  width: 120px;
+  height: 50px;
+  border-radius: 4px;
+  background: #6079ff;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.list-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  padding: 10px 50px;
+  margin: 30px;
+  border-radius: 6px;
+  background: white;
+}
+
+.list-code .export-excel {
+  background-color: #4CAF50;
+  /* Green */
+  border: 2px solid #4CAF50;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.list-code .export-excel:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+}
+
+.listcode-format-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 15px;
+  font-weight: 600;
+  justify-items: center;
+}
+
+.listcode-format {
+  align-items: center;
+  font-weight: 500;
+  padding: 20px 0px;
+}
+
+.listcode-allcodes {
+  overflow-y: auto;
+  width: 100%;
+}
