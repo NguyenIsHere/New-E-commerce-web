@@ -661,6 +661,18 @@ app.get("/listpayment", async (req, res) => {
   res.json(payments);
 });
 
+// Creating endpoint for searching discount
+app.post("/searchdiscount", async (req, res) => {
+  let discount = await Discount.findOne({ code: req.body.code });
+  if (!discount) {
+    return res.json({ success: false, errors: "Discount code not found" });
+  } else {
+    if (discount.isExpired) {
+      return res.json({ success: false, errors: "Discount code is expired" });
+    }
+    return res.json({ success: true, type: discount.type });
+  }
+});
 server.listen(port, (error) => {
   if (!error) {
     console.log("Server is running on port: " + port);

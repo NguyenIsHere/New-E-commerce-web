@@ -1,4 +1,4 @@
-import {React,useContext} from 'react'
+import {React,useContext,useState} from 'react'
 import './CartItems.css'
 import {ShopContext} from '../../Context/ShopContext'
 import remove_icon from '../Assets/cart_cross_icon.png'
@@ -7,6 +7,43 @@ import {Link} from 'react-router-dom'
 const CartItems = () =>
 {
   const {getTotalCartAmount,all_product,cartItems,removeFromCart} = useContext(ShopContext);
+  
+  const [promocode, setPromocode] = useState({code:""});
+  const handleClickcode = async () => {
+    if(!promocode){
+      return alert('Please enter a promo code')
+    }
+    else{
+      const response = await fetch('http://localhost:4000/searchdiscount',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify(promocode),
+      });
+      const data = await response.json();
+      // if(data.success){
+      //   switch (data.type) {
+      //     case "delivery":
+      //       setShippingfee(0);
+      //       setTotalprice(getTotalCartAmount()+shippingfee);
+      //       break;
+      //     case "product":
+      //       setShippingfee(50);
+      //       setTotalprice(totalprice-30);
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      // }else{
+      //   alert(`Error,${data.message}`)
+      // }
+    }
+  }
+  
+  const handleChangecode = (e) =>{
+    setPromocode({...promocode,[e.target.name]:e.target.value})
+  }
   const handleClick = async () =>{
     try {
       const requestbody = {
@@ -70,7 +107,7 @@ const CartItems = () =>
             <hr />
             <div className="cartitems-total-item">
               <p>Shipping Fee</p>
-              <p>Free</p>
+              <p>"Free"</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
@@ -83,8 +120,8 @@ const CartItems = () =>
         <div className="cartitems-promocode">
           <p>If you have a promo code, Enter it here</p>
           <div className='cartitems-promobox'>
-            <input type="text" placeholder='promo code' />
-            <button>Submit</button>
+            <input value={promocode.code} onChange={handleChangecode} name='code' type="text" placeholder='promo code' />
+            <button onClick={handleClickcode}>Submit</button>
           </div>
         </div>
       </div>
