@@ -72,11 +72,12 @@
     font-weight: 600;
     justify-items: center;
   }
-  .list-code hr{
-    width: 80%;
-  }
   .listcode-format {
     align-items: center;
     font-weight: 500;
     padding: 20px 0px;
+  }
+  .listcode-allcodes{
+    overflow-y: auto;
+    width: 100%;
   }
