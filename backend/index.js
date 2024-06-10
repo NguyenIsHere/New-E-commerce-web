@@ -655,6 +655,12 @@ app.get("/listdiscount", async (req, res) => {
   res.json(discounts);
 });
 
+// Creating endpoint for listing payment
+app.get("/listpayment", async (req, res) => {
+  let payments = await Payment.find({});
+  res.json(payments);
+});
+
 server.listen(port, (error) => {
   if (!error) {
     console.log("Server is running on port: " + port);
