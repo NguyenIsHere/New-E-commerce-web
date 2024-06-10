@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {useState} from 'react'
 import {useContext} from 'react'
 import {ShopContext} from '../../Context/ShopContext'
@@ -25,6 +25,27 @@ const Navbar = () =>
     e.target.classList.toggle('open');
   }
 
+  const [value, setValue] = useState('')
+  const changeHandler = (e) =>{
+    setValue(e.target.value)
+    console.log(value)
+  }
+  const [allproducts, setAllProducts] = useState([])
+
+  
+  useEffect(() =>
+    {
+      const fetchInfo = async () =>
+        {
+          await fetch('http://localhost:4000/allproducts')
+            .then((res) => res.json())
+            .then((data) => {setAllProducts(data)})
+            console.log(allproducts)
+        }
+        fetchInfo();
+      console.log(allproducts)
+    }, [])
+
   return (
     <div className='navbar'>
       <div onClick={() => {setMenu("shop")}}>
@@ -40,6 +61,23 @@ const Navbar = () =>
         <li onClick={()=>{setMenu("womens")}}><Link style={{textDecoration:'none'}} to='/womens'>Women</Link> {menu==="womens"?<hr/>:<></>}</li>
         <li onClick={()=>{setMenu("kids")}}><Link style={{textDecoration:'none'}} to='/kids'>Kids</Link> {menu==="kids"?<hr/>:<></>}</li>
       </ul>
+      <div className="search-container">
+        <div className="search-inner">
+          <input type="text" value={value} onChange={changeHandler} placeholder='Search product here'/>
+        </div>
+        <div className="dropdown">
+          {allproducts.filter(item => {
+            const searchTerm = value.toLowerCase()
+            const name = item.name.toLowerCase()
+            return searchTerm && name.includes(searchTerm)
+          })
+          .map((item) =>{
+            return <>
+              <div onClick={() => {window.location.href = `/product/${item.id}`}} className='dropdown-row'>{item.name}</div>
+            </>
+          })}
+        </div>
+      </div>
       <div className="nav-login-cart">
         <div className="nav-admin">
           {localStorage.getItem('auth-token') && JSON.parse(localStorage.getItem('user')).isAdmin === true
