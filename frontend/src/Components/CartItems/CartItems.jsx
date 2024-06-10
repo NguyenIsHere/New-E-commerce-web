@@ -9,6 +9,8 @@ const CartItems = () =>
   const {getTotalCartAmount,all_product,cartItems,removeFromCart} = useContext(ShopContext);
   
   const [promocode, setPromocode] = useState({code:""});
+  const [ship,setShip] = useState(50); //ship fee: $50
+  const [total,setTotal] = useState(getTotalCartAmount() + ship); //total fee = subtotal + ship fee 
   const handleClickcode = async () => {
     if(!promocode){
       return alert('Please enter a promo code')
@@ -22,22 +24,24 @@ const CartItems = () =>
         body:JSON.stringify(promocode),
       });
       const data = await response.json();
-      // if(data.success){
-      //   switch (data.type) {
-      //     case "delivery":
-      //       setShippingfee(0);
-      //       setTotalprice(getTotalCartAmount()+shippingfee);
-      //       break;
-      //     case "product":
-      //       setShippingfee(50);
-      //       setTotalprice(totalprice-30);
-      //       break;
-      //     default:
-      //       break;
-      //   }
-      // }else{
-      //   alert(`Error,${data.message}`)
-      // }
+      if(data.success){
+        switch (data.type) {
+          case "delivery": //free shipping
+            setTotal(total - ship);
+            setShip(0);
+            alert('Applied free shipping')
+            break;
+          case "product": //discount $30 on total
+            setShip(50);
+            setTotal(total - 30);
+            alert('Applied discount $30 on total')
+            break;
+          default:
+            break;
+        }
+      }else{
+        alert(`Error,${data.message}`)
+      }
     }
   }
   
@@ -47,7 +51,7 @@ const CartItems = () =>
   const handleClick = async () =>{
     try {
       const requestbody = {
-        amount:getTotalCartAmount()+1000,
+        amount:total + 1000,
         email:JSON.parse(localStorage.getItem('user')).email,
       };
       const response = await fetch('http://localhost:4000/payment', {
@@ -107,12 +111,12 @@ const CartItems = () =>
             <hr />
             <div className="cartitems-total-item">
               <p>Shipping Fee</p>
-              <p>"Free"</p>
+              <p>${ship}</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
               <h3>Total</h3>
-              <h3>${getTotalCartAmount()}</h3>
+              <h3>${total}</h3>
             </div>
           </div>
           <button onClick={handleClick}>PROCEED TO CHECKOUT</button>

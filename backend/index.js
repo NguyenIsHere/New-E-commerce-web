@@ -41,8 +41,7 @@ app.post("/payment", async (req, res) => {
   // ridirect to /cart after payment success
   var redirectUrl = "http://localhost:3000/cart";
   // change ipnUrl each time open this project by using ngrok in cmd: "ngrok http 4000" to public localhost:4000 to internet in order to momo server can call back to update order
-  var ipnUrl =
-    "https://3ebe-2402-800-63a8-c599-34b9-19d6-1010-66b3.ngrok-free.app/callback";
+  var ipnUrl = "https://254c-171-252-189-219.ngrok-free.app/callback";
   var requestType = "payWithMethod";
   var amount = req.body?.amount;
   var orderId = partnerCode + new Date().getTime();
