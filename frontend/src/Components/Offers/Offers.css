@@ -32,12 +32,16 @@
   height: 70px;
   border: none;
   border-radius: 35px;
-  background: #ff4141;
+  background: #ff4111;
   color: white;
   font-size: 22px;
   font-weight: 500;
   margin-top: 30px;
   cursor: pointer;
+}
+
+.offers-left button:hover {
+  background-color: rgb(253, 119, 41);
 }
 
 .offers-right {

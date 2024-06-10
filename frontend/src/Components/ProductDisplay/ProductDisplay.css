@@ -67,7 +67,7 @@
   font-size: 16px;
   font-weight: 600;
   color: white;
-  background: #ff4141;
+  background: #ff4111;
   margin-top: 40px;
   margin-bottom: 40px;
   border: none;
@@ -75,7 +75,16 @@
   cursor: pointer;
 }
 
+.productdisplay-right button:hover {
+  background-color: rgb(253, 119, 41);
+}
+
 .productdisplay-right .out-of-stock {
+  background: grey;
+  cursor: not-allowed;
+}
+
+.productdisplay-right .out-of-stock:hover {
   background: grey;
 }
 

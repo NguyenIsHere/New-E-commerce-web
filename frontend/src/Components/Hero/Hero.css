@@ -53,6 +53,10 @@
   cursor: pointer;
 }
 
+.hero-latest-btn:hover {
+  background-color: rgb(253, 119, 41);
+}
+
 .hero-right {
   flex: 1;
   display: flex;

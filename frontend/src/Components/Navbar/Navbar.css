@@ -61,9 +61,10 @@
   width: 40px;
 }
 
-.nav-admin img{
+.nav-admin img {
   width: 40px;
 }
+
 .nav-login-cart button {
   width: 157px;
   height: 58px;
@@ -98,6 +99,82 @@
 
 .nav-dropdown {
   display: none;
+  margin-left: 30px;
+}
+
+.search-container {
+  position: relative;
+  margin-left: 30px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-container .search-inner {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-container .search-inner input[type="text"] {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  outline: none;
+}
+
+.search-container .search-btn {
+  padding: 5px 10px;
+  border: none;
+  background-color: #ff4111;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-container .search-btn:hover {
+  background-color: rgb(253, 119, 41);
+}
+
+.search-container .dropdown {
+  position: absolute;
+  max-height: 200px;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 48px;
+}
+
+.search-container .dropdown.hidden {
+  display: none;
+}
+
+.search-container .dropdown-row.hidden {
+  display: none;
+}
+
+.search-container .dropdown .dropdown-row {
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.search-container .dropdown .dropdown-row:hover {
+  background-color: #f1f1f1;
 }
 
 @media(max-width: 1280px) {
@@ -113,9 +190,30 @@
     font-size: 25px;
   }
 
+  .nav-dropdown {
+    display: block;
+    width: 30px;
+    rotate: -90deg;
+    transition: 0.5s;
+  }
+
   .nav-menu {
-    gap: 30px;
-    font-size: 16px;
+    display: none;
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    background-color: #fff;
+    justify-content: center;
+    top: 50px;
+  }
+
+  .nav-menu-visible {
+    display: flex;
+    margin-top: 20px;
+  }
+
+  .nav-dropdown.open {
+    transform: rotate(90deg);
   }
 
   .nav-login-cart {
@@ -147,10 +245,34 @@
     font-size: 20px;
   }
 
-  .nav-menu {
-    gap: 25px;
-    font-size: 14px;
+  .search-container {
+    width: 100%;
   }
+
+  .search-container .dropdown {
+    width: 100%;
+  }
+
+  .nav-dropdown.open {
+    transform: rotate(90deg);
+  }
+
+  .nav-menu {
+    display: none;
+    font-size: 16px;
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    background-color: #fff;
+    justify-content: center;
+    top: 50px;
+  }
+
+  .nav-menu-visible {
+    display: flex;
+    margin-top: 10px;
+  }
+
 
   .nav-login-cart img {
     width: 30px;
@@ -177,17 +299,28 @@
 @media(max-width: 800px) {
   .navbar {
     padding: 10px 0px;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
   .nav-logo p {
     font-size: 18px;
   }
 
-  .nav-dropdown {
-    display: block;
-    width: 30px;
-    rotate: -90deg;
-    transition: 0.5s;
+  .search-container {
+    margin-right: 20px;
+  }
+
+  .search-container .search-inner input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
+    border: none;
+    outline: none;
+  }
+
+  .search-container .dropdown {
+    width: 100%;
   }
 
   .nav-menu {
@@ -197,11 +330,12 @@
     position: absolute;
     background-color: #fff;
     justify-content: center;
-    top: 50px;
+    top: 100px;
   }
 
   .nav-menu-visible {
     display: flex;
+    margin-top: 80px;
   }
 
   .nav-dropdown.open {
@@ -211,8 +345,9 @@
 
 @media(max-width:500px) {
   .navbar {
-    width: 8px 0px;
-    gap: 0;
+    padding: 10px 0px;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
   .nav-logo {
@@ -222,6 +357,16 @@
   .nav-menu {
     height: 70px;
     top: 50px;
+    font-size: 14px;
+  }
+
+  .nav-menu-visible {
+    display: flex;
+    margin-top: 130px;
+  }
+
+  .search-container .dropdown .dropdown-row {
+    font-size: 12px;
   }
 
   .nav-login-cart {

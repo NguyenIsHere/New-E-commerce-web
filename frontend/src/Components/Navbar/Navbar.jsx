@@ -26,12 +26,16 @@ const Navbar = () =>
   }
 
   const [value, setValue] = useState('')
-  const changeHandler = (e) =>{
-    setValue(e.target.value)
-    console.log(value)
-  }
-  const [allproducts, setAllProducts] = useState([])
+  const [showDropdown, setShowDropdown] = useState(false);
 
+  const changeHandler = (e) => {
+    setValue(e.target.value);
+    const searchTerm = e.target.value.toLowerCase();
+    const hasMatchingProduct = allproducts.some(item => item.name.toLowerCase().includes(searchTerm));
+    setShowDropdown(e.target.value !== '' && hasMatchingProduct);
+    
+  };
+  const [allproducts, setAllProducts] = useState([])
   
   useEffect(() =>
     {
@@ -44,8 +48,9 @@ const Navbar = () =>
         }
         fetchInfo();
       console.log(allproducts)
-    }, [])
-
+  }, [])
+  
+  
   return (
     <div className='navbar'>
       <div onClick={() => {setMenu("shop")}}>
@@ -54,6 +59,25 @@ const Navbar = () =>
                 <p>SHOPPER</p>
             </Link>
       </div>
+      <div className="search-container">
+        <div className="search-inner">
+          <input type="text" value={value} onChange={changeHandler} placeholder='Search product here' />
+          <button className='search-btn'>Search</button>
+        </div>
+        <div className={`dropdown ${showDropdown ? '' : 'hidden'}`}>
+          {allproducts.filter(item => {
+            const searchTerm = value.toLowerCase()
+            const name = item.name.toLowerCase()
+            return searchTerm && name.includes(searchTerm)
+          })
+            .map((item) =>
+            {
+            return <>
+              <div onClick={() => {window.location.href = `/product/${item.id}`}} className={`dropdown-row ${value  ? '' : 'hidden'}`}>{item.name}</div>           
+            </>
+          })}
+        </div>
+      </div>
       <img className='nav-dropdown' onClick={dropdown_toggle} src={nav_dropdown} alt="" />
       <ul ref={menuRef} className='nav-menu'>
         <li onClick={()=>{setMenu("shop")}}><Link style={{textDecoration:'none'}} to='/'>Shop</Link> {menu==="shop"?<hr/>:<></>}</li>
@@ -61,23 +85,6 @@ const Navbar = () =>
         <li onClick={()=>{setMenu("womens")}}><Link style={{textDecoration:'none'}} to='/womens'>Women</Link> {menu==="womens"?<hr/>:<></>}</li>
         <li onClick={()=>{setMenu("kids")}}><Link style={{textDecoration:'none'}} to='/kids'>Kids</Link> {menu==="kids"?<hr/>:<></>}</li>
       </ul>
-      <div className="search-container">
-        <div className="search-inner">
-          <input type="text" value={value} onChange={changeHandler} placeholder='Search product here'/>
-        </div>
-        <div className="dropdown">
-          {allproducts.filter(item => {
-            const searchTerm = value.toLowerCase()
-            const name = item.name.toLowerCase()
-            return searchTerm && name.includes(searchTerm)
-          })
-          .map((item) =>{
-            return <>
-              <div onClick={() => {window.location.href = `/product/${item.id}`}} className='dropdown-row'>{item.name}</div>
-            </>
-          })}
-        </div>
-      </div>
       <div className="nav-login-cart">
         <div className="nav-admin">
           {localStorage.getItem('auth-token') && JSON.parse(localStorage.getItem('user')).isAdmin === true
