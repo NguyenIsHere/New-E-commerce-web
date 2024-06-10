@@ -1,5 +1,5 @@
 import React, {createContext,useEffect,useState} from 'react'
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 
 export const ShopContext = createContext(null);
 

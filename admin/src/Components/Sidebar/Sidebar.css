@@ -20,7 +20,10 @@
   gap: 20px;
   cursor: pointer;
 }
-
+.discount_icon{
+  width: 42x;
+  height: 45px;
+}
 @media(max-width: 800px) {
   .sidebar {
     max-width: none;
