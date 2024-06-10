@@ -1,0 +1,82 @@
+.add-and-list_code{
+    display: flex;
+}
+.add-code{
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+    max-width: max-content;
+    padding: 30px 50px;
+    border-radius: 6px;
+    margin: 20px 30px; 
+    background: white;
+}
+.addcode-itemfield {
+    width: 100%;
+    color: #7b7b7b;
+    font-size: 16px;
+  }
+
+.addcode-itemfield input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    border-radius: 4px;
+    padding-left: 15px;
+    border: 1px solid #c3c3c3;
+    outline: none;
+    color: #7b7b7b;
+    font-family: 'Poppins';
+    font-size: 14px;
+  }
+  .add-code-selector {
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
+    color: #7b7b7b;
+    border: 1px solid #7b7b7b;
+    border-radius: 4px;
+  }
+  .addcode-btn {
+    margin-top: 20px;
+    width: 120px;
+    height: 50px;
+    border-radius: 4px;
+    background: #6079ff;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .list-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 50px;
+    margin: 30px;
+    border-radius: 6px;
+    background: white;
+  }
+  .listcode-format-main {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    padding: 20px 0px;
+    color: #454545;
+    font-size: 15px;
+    font-weight: 600;
+    justify-items: center;
+  }
+  .list-code hr{
+    width: 80%;
+  }
+  .listcode-format {
+    align-items: center;
+    font-weight: 500;
+    padding: 20px 0px;
+  }
