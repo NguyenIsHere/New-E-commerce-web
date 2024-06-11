@@ -3,7 +3,7 @@ import {useState} from 'react'
 import {useContext} from 'react'
 import {ShopContext} from '../../Context/ShopContext'
 import './Navbar.css'
-
+import { useNavigate } from 'react-router-dom';
 import logo from '../Assets/logo.png'
 import cart_icon from '../Assets/cart_icon.png'
 import nav_dropdown from '../Assets/big_dropdown_icon.png'
@@ -49,7 +49,13 @@ const Navbar = () =>
         fetchInfo();
       console.log(allproducts)
   }, [])
-  
+
+  const navigate = useNavigate();
+
+  const searchHandler = () => {
+    navigate(`/search?term=${value}`);
+    setShowDropdown(false);
+  };
   
   return (
     <div className='navbar'>
@@ -61,8 +67,8 @@ const Navbar = () =>
       </div>
       <div className="search-container">
         <div className="search-inner">
-          <input type="text" value={value} onChange={changeHandler} placeholder='Search product here' />
-          <button className='search-btn'>Search</button>
+          <input type="text" value={value} onChange={changeHandler}  placeholder='Search product here' />
+          <button className='search-btn' onClick={searchHandler}>Search</button>
         </div>
         <div className={`dropdown ${showDropdown ? '' : 'hidden'}`}>
           {allproducts.filter(item => {

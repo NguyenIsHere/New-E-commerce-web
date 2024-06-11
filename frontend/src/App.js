@@ -13,6 +13,7 @@ import women_banner from './Components/Assets/banner_women.png'
 import kid_banner from './Components/Assets/banner_kids.png'
 import Scrolltop from './Components/Scrolltop/Scrolltop'
 import Checkoutpage from './Pages/Checkoutpage'
+import SearchResults from './Components/SearchResults/SearchResults'
 
 function App () {
   return (
@@ -41,6 +42,7 @@ function App () {
           <Route path='/login' element={<LoginSignup />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/checkout' element={<Checkoutpage />} />
+          <Route path='/search' element={<SearchResults />} />
         </Routes>
         <Footer />
       </BrowserRouter>
