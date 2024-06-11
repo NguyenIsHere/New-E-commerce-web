@@ -52,7 +52,9 @@ const Navbar = () =>
 
   const navigate = useNavigate();
 
-  const searchHandler = () => {
+  const searchHandler = () =>
+  {
+    if (!value) return;
     navigate(`/search?term=${value}`);
     setShowDropdown(false);
   };
@@ -67,7 +69,11 @@ const Navbar = () =>
       </div>
       <div className="search-container">
         <div className="search-inner">
-          <input type="text" value={value} onChange={changeHandler}  placeholder='Search product here' />
+          <input type="text" value={value} onChange={changeHandler} onKeyDown={event => {
+    if (event.key === 'Enter') {
+      searchHandler();
+    }
+  }}  placeholder='Search product here' />
           <button className='search-btn' onClick={searchHandler}>Search</button>
         </div>
         <div className={`dropdown ${showDropdown ? '' : 'hidden'}`}>
