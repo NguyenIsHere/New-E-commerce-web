@@ -1,5 +1,6 @@
 import {React,useEffect,useState} from 'react'
 import './Discount.css'
+import cross_icon from '../../assets/cross_icon.png'
 import * as XLSX from 'xlsx';
 
 const Discount = () => {
@@ -53,6 +54,20 @@ const Discount = () => {
         XLSX.writeFile(wb, "discounts.xlsx");
     }
 
+    const remove_discount = async (code) =>
+    {
+      await fetch('http://localhost:4000/removediscount', {
+        method: 'POST',
+        headers:
+        {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({code:code}),
+      })
+      await fetchInfo();
+    }
+
     return (
         <div className='add-and-list_code'>
             <div className="add-code">
@@ -91,6 +106,7 @@ const Discount = () => {
                             <p>{discount.code}</p>
                             <p>{discount.type}</p>
                             <p>{discount.date}</p>
+                            <img onClick={()=>{remove_discount(discounts.code)}} className='listdiscount-remove-icon' src={cross_icon} alt="" />
                     </div>
                         <hr />
                         </>
