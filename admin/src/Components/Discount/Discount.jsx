@@ -97,6 +97,7 @@ const Discount = () => {
                     <p>Code</p>
                     <p>Type of code</p>
                     <p>Date</p>
+                    <p>Remove</p>
                 </div>
                 <div className="listcode-allcodes">
                     <hr />
